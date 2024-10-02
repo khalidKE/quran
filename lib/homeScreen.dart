@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart'; 
 import 'package:quran/API.dart';
 import 'package:quran/ayahOfTheDay.dart';
 
@@ -12,21 +13,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  HijriCalendar? _hijri; // Nullable HijriCalendar
+  HijriCalendar? _hijri;
   ApiServices _apiServices = ApiServices();
 
   @override
   void initState() {
     super.initState();
-    // Initialize the Hijri calendar with the current date
+    // Initialize Hijri calendar with the current date
     _hijri = HijriCalendar.now();
-    HijriCalendar.setLocal('en'); // Set Arabic locale for Hijri calendar
+    HijriCalendar.setLocal('en'); // Set English locale for Hijri calendar
+
+    // Initialize Date Formatting for English locale
+    initializeDateFormatting('en').then((_) {
+      setState(() {}); // Rebuild widget to apply formatting
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var format = DateFormat('EEE, d MMM yyyy');
+    var format = DateFormat('EEE, d MMM yyyy', 'en');
     var formattedDate = format.format(DateTime.now());
 
     return SafeArea(
@@ -34,11 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Column(
           children: [
             Container(
-              height: size.height * 0.22, // 22% of the screen height
+              height: size.height * 0.22,
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  fit: BoxFit.cover, // Background image
+                  fit: BoxFit.cover,
                   image: AssetImage('assets/background_img.jpg'),
                 ),
               ),
@@ -53,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold, // Bold font
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -64,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
-                          fontWeight: FontWeight.bold, // Apply bold globally
+                          fontWeight: FontWeight.bold,
                         ),
                         children: [
                           TextSpan(
