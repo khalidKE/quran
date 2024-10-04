@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:quran/API.dart';
 import 'package:quran/ayahOfTheDay.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,10 +16,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   HijriCalendar? _hijri;
   ApiServices _apiServices = ApiServices();
+  void setData() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("alreadyUsed", true);
+  }
 
   @override
   void initState() {
     super.initState();
+    setData();
     // Initialize Hijri calendar with the current date
     _hijri = HijriCalendar.now();
     HijriCalendar.setLocal('en'); // Set English locale for Hijri calendar

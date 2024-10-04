@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:quran/OnBoardingScreen.dart';
-
-
+import 'package:quran/mainScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,17 +12,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool alreadyUsed = false;
+  void getData() async {
+    final prefs = await SharedPreferences.getInstance();
+    alreadyUsed = prefs.getBool("alreadyUsed") ?? false;
+  }
+
   @override
-    void initState() {
+  void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), ()=> 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                const BoardScreen()), 
-      )
-    );
+    getData();
+    Timer(
+        const Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return alreadyUsed ? Mainscreen() : BoardScreen();
+              }),
+            ));
   }
 
   @override
