@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart'; 
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:quran/API.dart';
 import 'package:quran/ayahOfTheDay.dart';
 
@@ -126,6 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment
+                                      .center, // Center horizontally
                                   children: [
                                     Text(
                                       snapshot.data!.arText ??
@@ -135,6 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
                                       ),
+                                      textAlign:
+                                          TextAlign.center, // Center the text
                                     ),
                                     Divider(
                                         color: Colors.black, thickness: 0.5),

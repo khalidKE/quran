@@ -10,8 +10,11 @@ class Quranscreen extends StatefulWidget {
 class _QuranscreenState extends State<Quranscreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
-      body: Center(child: Text('Quran'),),
+    return SafeArea(
+        child: Scaffold(
+      body: Center(
+        child: Text('Quran'),
+      ),
     ));
   }
-  }
+}
