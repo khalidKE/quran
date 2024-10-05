@@ -15,4 +15,6 @@ class Constants {
     800: Color(0xff9662d6),
     900: Color(0xffffffff),
   });
+
+  static int? juzIndex;
 }

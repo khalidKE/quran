@@ -42,6 +42,10 @@ class ApiServices {
       throw ("Can't get the Surah");
     }
   }
+
+
+
+
 }
 
 // import 'package:flutter_quran_yt/models/aya_of_day.dart';
