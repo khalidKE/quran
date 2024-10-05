@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:quran/Surah.dart';
 import 'dart:math';
 import 'package:quran/ayahOfTheDay.dart';
+import 'package:quran/juz.dart';
 import 'package:quran_controller/quran_controller.dart';
 
 class ApiServices {
@@ -43,28 +44,17 @@ class ApiServices {
     }
   }
 
+ // Future<SajdaList> getSajda() async {}
 
+  Future<JuzModel> getJuzz(int index) async {
+    String url = "http://api.alquran.cloud/v1/juz/$index/quran-uthmani";
+    final response = await http.get(Uri.parse(url));
 
-
+    if (response.statusCode == 200) {
+      return JuzModel.fromJSON(json.decode(response.body));
+    } else {
+      print("Failed to load");
+      throw Exception("Failed to Load Post");
+    }
+  }
 }
-
-// import 'package:flutter_quran_yt/models/aya_of_day.dart';
-
-// class ApiServices {
-//   Future<AyaOfTheDay> getAyaOfTheDay() async {
-//     String url =
-//         "https://api.alquran.cloud/v1/ayah/${random(1, 6237)}/editions/quran-uthmani,en.asad,en.pickthall";
-//     final response = await http.get(Uri.parse(url));
-//     if (response.statusCode == 200) {
-//       return AyaOfTheDay.fromJSON(json.decode(response.body));
-//     } else {
-//       print("Failed to get api");
-//       throw Exception("Failed to Load Post");
-//     }
-//   }
-
-//   random(min, max) {
-//     var rn = Random();
-//     return min + rn.nextInt(max - min);
-//   }
-// }

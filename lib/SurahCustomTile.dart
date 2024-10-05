@@ -4,7 +4,7 @@ import 'package:quran/Surah.dart';
 Widget SurahCustomTile({
   required Surah surah,
   required VoidCallback ontap,
-  required BuildContext context, 
+  required BuildContext context,
 }) {
   return GestureDetector(
     onTap: ontap,

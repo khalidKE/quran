@@ -14,91 +14,113 @@ class Quranscreen extends StatefulWidget {
 
 class _QuranscreenState extends State<Quranscreen> {
   ApiServices apiServices = ApiServices();
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       initialIndex: 0,
       child: Scaffold(
-          appBar: AppBar(
-            title: Text('Quran'),
-            centerTitle: true,
-            bottom: TabBar(tabs: [
-              Text(
-                'Surah',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700),
+        appBar: AppBar(
+          title: const Text('Quran'),
+          centerTitle: true,
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                child: Text(
+                  'Surah',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
+                ),
               ),
-              Text(
-                'Sajda',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700),
+              Tab(
+                child: Text(
+                  'Sajda',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
+                ),
               ),
-              Text(
-                'Juz',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700),
+              Tab(
+                child: Text(
+                  'Juz',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
+                ),
               ),
-            ]),
+            ],
           ),
-          body: TabBarView(children: <Widget>[
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            // Surah Tab
             FutureBuilder(
-                future: apiServices.getSurah(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<Surah>> snapshot) {
-                  if (snapshot.hasData) {
-                    List<Surah>? surah = snapshot.data;
-                    return ListView.builder(
-                      itemCount: surah!.length,
-                      itemBuilder: (context, index) => SurahCustomTile(
-                        surah: surah[index],
-                        context: context,
-                        ontap: () {},
-                      ),
-                    );
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }),
-            GestureDetector(
-              child: Container(
-                padding: EdgeInsets.all(8.0),
-                child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3),
+              future: apiServices.getSurah(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Surah>> snapshot) {
+                if (snapshot.hasData) {
+                  List<Surah>? surahList = snapshot.data;
+                  return ListView.builder(
+                    itemCount: surahList!.length,
                     itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            Constants.juzIndex = (index + 1);
-                          });
-                          Navigator.pushNamed(context, JuzScreen.id);
+                      return SurahCustomTile(
+                        surah: surahList[index], // Display Surah names
+                        context: context,
+                        ontap: () {
+                          // You can add an action for tapping on each surah here if needed
                         },
-                        child: Card(
-                          elevation: 4,
-                          color: Colors.blueGrey,
-                          child: Center(
-                            child: Text('${index+1}',style: TextStyle(color: Colors.white,fontSize: 20),),
-                          ),
-                        ),
                       );
-                    }),
+                    },
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+
+            // Sajda Tab (you can customize this content)
+            const Center(
+              child: Text("Sajda content goes here."),
+            ),
+
+            // Juz Tab
+            GridView.builder(
+              padding: const EdgeInsets.all(8.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
               ),
+              itemCount: 30, // Number of Juz in the Quran
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      Constants.juzIndex = (index + 1);
+                    });
+                    Navigator.pushNamed(context, JuzScreen.id);
+                  },
+                  child: Card(
+                    elevation: 4,
+                    color: Colors.blueGrey,
+                    child: Center(
+                      child: Text(
+                        '${index + 1}',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
-            Center(
-              child: Text("It's rainy here"),
-            ),
-            Center(
-              child: Text("It's sunny here"),
-            ),
-          ])),
+          ],
+        ),
+      ),
     );
   }
 }

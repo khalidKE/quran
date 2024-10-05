@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_quran_yt/constants/constants.dart';
 import 'package:quran/API.dart';
+import 'package:quran/constants.dart';
+import 'package:quran/juz.dart'; // Assuming you have the model for Juz data
 
 class JuzScreen extends StatefulWidget {
   static const String id = 'juz_screen';
-  ApiServices apiServices = ApiServices();
+  final ApiServices apiServices = ApiServices();
 
   JuzScreen({super.key});
 
@@ -16,21 +17,39 @@ class _JuzScreenState extends State<JuzScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      body: FutureBuilder<JuzScreen>(
-          future: ApiService.getJuzz,
-          builder: (context, AsyncSnapshot<JuzScreen> snapshot) {
+      child: Scaffold(
+        body: FutureBuilder<JuzModel>(
+          future: widget.apiServices
+              .getJuzz(Constants.juzIndex!), // Correct future call
+          builder: (context, AsyncSnapshot<JuzModel> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasData) {
               print('${snapshot.data!.juzAyahs.length} length');
+              // You can now build your UI using the data
+              return ListView.builder(
+                itemCount: snapshot.data!.juzAyahs.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(snapshot.data!.juzAyahs[index].ayahsText),
+                    subtitle: Text(snapshot.data!.juzAyahs[index].surahName),
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            } else {
+              return const Center(
+                child: Text('No data available'),
+              );
             }
-            else{
-              
-            }
-          }),
-    ));
+          },
+        ),
+      ),
+    );
   }
 }
