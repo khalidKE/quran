@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quran/API.dart';
+import 'package:quran/APIServices.dart';
 import 'package:quran/JuzScreen.dart';
+import 'package:quran/Sajda.dart';
+import 'package:quran/SajdaTile.dart';
 import 'package:quran/Surah.dart';
 import 'package:quran/SurahCustomTile.dart';
 import 'package:quran/constants.dart';
@@ -58,37 +60,66 @@ class _QuranscreenState extends State<Quranscreen> {
         ),
         body: TabBarView(
           children: <Widget>[
-            // Surah Tab
             FutureBuilder(
               future: apiServices.getSurah(),
               builder:
                   (BuildContext context, AsyncSnapshot<List<Surah>> snapshot) {
-                if (snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(
+                    child: Text('No Surah data available'),
+                  );
+                } else {
                   List<Surah>? surahList = snapshot.data;
                   return ListView.builder(
                     itemCount: surahList!.length,
                     itemBuilder: (context, index) {
                       return SurahCustomTile(
-                        surah: surahList[index], // Display Surah names
+                        surah: surahList[index],
                         context: context,
                         ontap: () {
-                          // You can add an action for tapping on each surah here if needed
+                          // Handle tap on Surah
                         },
                       );
                     },
                   );
                 }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
               },
             ),
-
-            // Sajda Tab (you can customize this content)
-            const Center(
-              child: Text("Sajda content goes here."),
+            FutureBuilder(
+              future: apiServices.getSajda(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<SajdaList> snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('Something went wrong'),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.sajdaAyahs.length,
+                    itemBuilder: (context, index) {
+                      return SajdaCustomTile(
+                          snapshot.data!.sajdaAyahs[index], context);
+                    },
+                  );
+                } else {
+                  return const Center(child: Text('No Sajda Ayahs available'));
+                }
+              },
             ),
-
             // Juz Tab
             GridView.builder(
               padding: const EdgeInsets.all(8.0),

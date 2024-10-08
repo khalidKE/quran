@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quran/JuzScreen.dart'; // Assuming this is the Juz screen you are using
-import 'package:quran/constants.dart'; // Assuming constants contain your theme colors and other settings
-import 'package:quran/splashScreen.dart'; // Splash screen at startup
+import 'package:quran/JuzScreen.dart';
+import 'package:quran/constants.dart';
+import 'package:quran/splashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,10 +21,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Poppins',
       ),
-      home: const SplashScreen(), // Define the splash screen as the home
+      home: const SplashScreen(),
       routes: {
-        JuzScreen.id: (context) =>
-             JuzScreen(), // Define routes for navigation
+        JuzScreen.id: (context) => JuzScreen(),
       },
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:quran/constants.dart';
-import 'package:quran/mainscreen.dart'; // Import the Mainscreen
+import 'package:quran/mainScreen.dart';
 
 // on boarding
 class BoardScreen extends StatefulWidget {
@@ -93,7 +93,6 @@ class _BoardScreenState extends State<BoardScreen> {
                 style: TextStyle(
                     fontWeight: FontWeight.w700, color: Colors.black)),
             onDone: () {
-              // On Done button pressed, navigate to the Mainscreen
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -101,9 +100,7 @@ class _BoardScreenState extends State<BoardScreen> {
                 ),
               );
             },
-            onSkip: () {
-              // On Skip button pressed
-            },
+            onSkip: () {},
             dotsDecorator: DotsDecorator(
               size: const Size.square(10.0),
               activeSize: const Size(20.0, 10.0),

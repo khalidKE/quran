@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:quran/API.dart';
+import 'package:quran/APIServices.dart';
 import 'package:quran/ayahOfTheDay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

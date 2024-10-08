@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quran/API.dart';
+import 'package:quran/APIServices.dart';
 import 'package:quran/constants.dart';
-import 'package:quran/juz.dart'; // Assuming you have the model for Juz data
+import 'package:quran/juz.dart';
 
 class JuzScreen extends StatefulWidget {
   static const String id = 'juz_screen';
@@ -28,7 +28,6 @@ class _JuzScreenState extends State<JuzScreen> {
               );
             } else if (snapshot.hasData) {
               print('${snapshot.data!.juzAyahs.length} length');
-              // You can now build your UI using the data
               return ListView.builder(
                 itemCount: snapshot.data!.juzAyahs.length,
                 itemBuilder: (context, index) {
