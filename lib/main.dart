@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quran/JuzScreen.dart';
 import 'package:quran/constants.dart';
 import 'package:quran/splashScreen.dart';
+import 'package:quran/surah_details.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       routes: {
         JuzScreen.id: (context) => JuzScreen(),
+        SurahDetails.id:(context)=>SurahDetails(),
       },
     );
   }

@@ -6,6 +6,7 @@ import 'package:quran/SajdaTile.dart';
 import 'package:quran/Surah.dart';
 import 'package:quran/SurahCustomTile.dart';
 import 'package:quran/constants.dart';
+import 'package:quran/surah_details.dart';
 
 class Quranscreen extends StatefulWidget {
   const Quranscreen({super.key});
@@ -85,7 +86,10 @@ class _QuranscreenState extends State<Quranscreen> {
                         surah: surahList[index],
                         context: context,
                         ontap: () {
-                          // Handle tap on Surah
+                          setState(() {
+                            Constants.surahIndex = (index + 1);
+                          });
+                          Navigator.pushNamed(context, SurahDetails.id);
                         },
                       );
                     },

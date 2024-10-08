@@ -1,11 +1,12 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http; 
+import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:quran/Sajda.dart';
 import 'package:quran/Surah.dart';
 import 'dart:math';
 import 'package:quran/ayahOfTheDay.dart';
 import 'package:quran/juz.dart';
+import 'package:quran/translations.dart';
 
 class ApiServices {
   final endPointUrl = "http://api.alquran.cloud/v1/surah";
@@ -84,5 +85,12 @@ class ApiServices {
       print("Failed to load");
       throw Exception("Failed to Load Post");
     }
+  }
+
+  Future<SurahTranslationList> getTranslation(int index) async {
+    final url =
+        "https://quranenc.com/api/v1/translation/sura/english_rwwad/$index";
+    var res = await http.get(Uri.parse(url));
+    return SurahTranslationList.fromJson(json.decode(res.body));
   }
 }
