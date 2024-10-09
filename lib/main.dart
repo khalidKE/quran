@@ -25,8 +25,7 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       routes: {
         JuzScreen.id: (context) => JuzScreen(),
-        SurahDetails.id:(context)=>SurahDetails(),
-        
+        SurahDetails.id: (context) => SurahDetails(),
       },
     );
   }
