@@ -44,6 +44,7 @@ dependencies:
   http: ^1.2.2
   quran_controller: ^1.6.8
   flutter_launcher_icons: ^0.14.1
+  solid_bottom_sheet: ^0.1.13
 
 dev_dependencies:
   flutter_test:

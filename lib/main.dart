@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         JuzScreen.id: (context) => JuzScreen(),
         SurahDetails.id:(context)=>SurahDetails(),
+        
       },
     );
   }
