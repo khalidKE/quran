@@ -1,40 +1,65 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quran/Surah.dart';
 
-Widget SurahCustomTile({
-  required Surah surah,
-  required VoidCallback ontap,
-  required BuildContext context,
-}) {
+
+Widget SurahCustomListTile(
+    {required Surah surah,
+    required BuildContext context,
+    required VoidCallback ontap}) {
   return GestureDetector(
     onTap: ontap,
     child: Container(
-      margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 4,
-            spreadRadius: 1,
-            offset: const Offset(1, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      padding: const EdgeInsets.all(16.0),
+      decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+          color: Colors.black12,
+          blurRadius: 3.0,
+        ),
+      ]),
+      child: Column(
         children: [
-          Text(
-            surah.name ?? '',
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            surah.englishName ?? '',
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          Row(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                height: 30,
+                width: 40,
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black,
+                ),
+                child: Text(
+                  (surah.number).toString(),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    surah.englishName!,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(surah.englishNameTranslation!),
+                ],
+              ),
+              const Spacer(),
+              Text(
+                surah.name!,
+                style: const TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
+              ),
+            ],
           ),
         ],
       ),

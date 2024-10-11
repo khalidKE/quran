@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:quran/APIServices.dart';
+import 'package:quran/JuzCustomTile.dart';
 import 'package:quran/constants.dart';
 import 'package:quran/juz.dart';
 
-class JuzScreen extends StatefulWidget {
+
+
+class JuzScreen extends StatelessWidget {
   static const String id = 'juz_screen';
-  final ApiServices apiServices = ApiServices();
 
-  JuzScreen({super.key});
+  ApiServices apiServices = ApiServices();
 
-  @override
-  State<JuzScreen> createState() => _JuzScreenState();
-}
+  JuzScreen({Key? key}) : super(key: key);
 
-class _JuzScreenState extends State<JuzScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder<JuzModel>(
-          future: widget.apiServices
-              .getJuzz(Constants.juzIndex!), // Correct future call
+          future: apiServices.getJuzz(Constants.juzIndex!),
           builder: (context, AsyncSnapshot<JuzModel> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -31,19 +29,15 @@ class _JuzScreenState extends State<JuzScreen> {
               return ListView.builder(
                 itemCount: snapshot.data!.juzAyahs.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(snapshot.data!.juzAyahs[index].ayahsText),
-                    subtitle: Text(snapshot.data!.juzAyahs[index].surahName),
+                  return JuzCustomTile(
+                    list: snapshot.data!.juzAyahs,
+                    index: index,
                   );
                 },
               );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('Error: ${snapshot.error}'),
-              );
             } else {
               return const Center(
-                child: Text('No data available'),
+                child: Text('Data not found'),
               );
             }
           },

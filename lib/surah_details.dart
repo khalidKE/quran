@@ -5,69 +5,102 @@ import 'package:quran/customTranslation.dart';
 import 'package:quran/translations.dart';
 import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
 
-enum Translation { english, french, german }
 
-class SurahDetails extends StatefulWidget {
-  const SurahDetails({super.key});
+enum Translation { urdu, hindi, english, spanish }
+
+class Surahdetail extends StatefulWidget {
+  const Surahdetail({Key? key}) : super(key: key);
+
   static const String id = 'surahDetail_screen';
 
   @override
-  State<SurahDetails> createState() => _SurahDetailsState();
+  _SurahdetailState createState() => _SurahdetailState();
 }
 
-class _SurahDetailsState extends State<SurahDetails> {
-  ApiServices _apiServices = ApiServices();
-  Translation? _translation = Translation.english;
+class _SurahdetailState extends State<Surahdetail> {
+  final ApiServices _apiServices = ApiServices();
+  //SolidController _controller = SolidController();
+  Translation? _translation = Translation.urdu;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-        future: _apiServices.getTranslation(
-            Constants.surahIndex!, _translation!.index),
-        builder: (BuildContext context,
-            AsyncSnapshot<SurahTranslationList> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasData) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 50),
-              child: ListView.builder(
-                itemCount: snapshot.data!.translationList.length,
-                itemBuilder: (context, index) {
-                  return TranslationTile(
-                    index: index,
-                    surahTranslation: snapshot.data!.translationList[index],
-                  );
-                },
+    print(_translation!.index);
+
+    return SafeArea(
+      child: Scaffold(
+        body: FutureBuilder(
+          future: _apiServices.getTranslation(
+              Constants.surahIndex!, _translation!.index),
+          builder: (BuildContext context,
+              AsyncSnapshot<SurahTranslationList> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasData) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: ListView.builder(
+                  itemCount: snapshot.data!.translationList.length,
+                  itemBuilder: (context, index) {
+                    return TranslationTile(
+                      index: index,
+                      surahTranslation: snapshot.data!.translationList[index],
+                    );
+                  },
+                ),
+              );
+            } else
+              return const Center(
+                child: Text('Translation Not found'),
+              );
+          },
+        ),
+        bottomSheet: SolidBottomSheet(
+          headerBar: Container(
+            color: Theme.of(context).primaryColor,
+            height: 50,
+            child: const Center(
+              child: Text(
+                "Swipe me!",
+                style: TextStyle(color: Colors.white),
               ),
-            );
-          } else {
-            return const Center(child: Text('Translation Not Found'));
-          }
-        },
-      ),
-      bottomSheet: SolidBottomSheet(
-        headerBar: Container(
-          color: Theme.of(context).primaryColor,
-          height: 50,
-          child: const Center(
-            child: Text(
-              "Swipe me!",
-              style: TextStyle(color: Colors.white),
             ),
           ),
-        ),
-        body: Container(
-          color: Colors.white,
-          height: 150, // Increased height for better usability
-          child: SingleChildScrollView(
-            child: Center(
-              child: Column(
+          body: Container(
+            color: Colors.white,
+            height: 30,
+            child: SingleChildScrollView(
+              child: Center(
+                  child: Column(
                 children: <Widget>[
                   ListTile(
+                    title: const Text('Urdu'),
+                    leading: Radio<Translation>(
+                      value: Translation.urdu,
+                      groupValue: _translation,
+                      onChanged: (Translation? value) {
+                        setState(() {
+                          _translation = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Hindi'),
+                    leading: Radio<Translation>(
+                      value: Translation.hindi,
+                      groupValue: _translation,
+                      onChanged: (Translation? value) {
+                        setState(() {
+                          _translation = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
                     title: const Text('English'),
-                    leading: Radio(
+                    leading: Radio<Translation>(
                       value: Translation.english,
                       groupValue: _translation,
                       onChanged: (Translation? value) {
@@ -78,21 +111,9 @@ class _SurahDetailsState extends State<SurahDetails> {
                     ),
                   ),
                   ListTile(
-                    title: const Text('French'),
-                    leading: Radio(
-                      value: Translation.french,
-                      groupValue: _translation,
-                      onChanged: (Translation? value) {
-                        setState(() {
-                          _translation = value;
-                        });
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text('German'),
-                    leading: Radio(
-                      value: Translation.german,
+                    title: const Text('Spanish'),
+                    leading: Radio<Translation>(
+                      value: Translation.spanish,
                       groupValue: _translation,
                       onChanged: (Translation? value) {
                         setState(() {
@@ -102,7 +123,7 @@ class _SurahDetailsState extends State<SurahDetails> {
                     ),
                   ),
                 ],
-              ),
+              )),
             ),
           ),
         ),

@@ -3,92 +3,87 @@ import 'package:quran/constants.dart';
 import 'package:quran/translations.dart';
 
 class TranslationTile extends StatelessWidget {
-  TranslationTile({
-    super.key,
-    required this.index,
-    required this.surahTranslation,
-  });
-
   final int index;
   final SurahTranslation surahTranslation;
 
+  const TranslationTile(
+      {Key? key, required this.index, required this.surahTranslation})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.rectangle,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 4,
-            color: Colors.black26,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Constants.kprimary,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
-                  ),
-                ),
-                padding: const EdgeInsets.all(16),
-                width: double.infinity,
-              ),
-              Positioned(
-                top: 3,
-                left: 12,
-                child: Container(
-                  padding: const EdgeInsets.all(6),
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.black,
-                  ),
-                  child: Text(
-                    surahTranslation.aya ?? '0', // Default to '0' if null
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            boxShadow: [
+              BoxShadow(blurRadius: 1),
+            ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Stack(
               children: [
-                Text(
-                  surahTranslation.arabicText ?? 'No text available',
-                  textAlign: TextAlign.end,
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Constants.kPrimary,
+                    //color: Color(0xffA5D2D6),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8)),
                   ),
+                  padding: const EdgeInsets.all(16),
+                  width: double.infinity,
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  surahTranslation.translation ?? 'No translation available',
-                  textAlign: TextAlign.end,
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontSize: 16,
+                Positioned(
+                  top: 3,
+                  left: 12,
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.black),
+                    child: Text(
+                      surahTranslation.aya!,
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            Container(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      surahTranslation.arabic_text!,
+                      textAlign: TextAlign.end,
+                      style: const TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      surahTranslation.translation!,
+                      textAlign: TextAlign.end,
+                      style: const TextStyle(color: Colors.black, fontSize: 18),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

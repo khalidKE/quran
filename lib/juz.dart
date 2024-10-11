@@ -5,14 +5,11 @@ class JuzModel {
   JuzModel({required this.juzAyahs, required this.juzNumber});
 
   factory JuzModel.fromJSON(Map<String, dynamic> json) {
-    List<dynamic> ayahs = json['data']['ayahs']; // Extracting ayahs list
+    Iterable juzAyahs = json['data']['ayahs'];
     List<JuzAyahs> juzAyahsList =
-        ayahs.map((e) => JuzAyahs.fromJSON(e)).toList(); // Mapping each ayah
+        juzAyahs.map((e) => JuzAyahs.fromJSON(e)).toList();
 
-    return JuzModel(
-      juzAyahs: juzAyahsList,
-      juzNumber: json['data']['number'], // Fetching juz number
-    );
+    return JuzModel(juzAyahs: juzAyahsList, juzNumber: json['data']['number']);
   }
 }
 
@@ -28,9 +25,8 @@ class JuzAyahs {
 
   factory JuzAyahs.fromJSON(Map<String, dynamic> json) {
     return JuzAyahs(
-      ayahNumber: json['number'], // Fetching ayah number
-      ayahsText: json['text'], // Fetching ayah text
-      surahName: json['surah']['name'], // Fetching surah name
-    );
+        ayahNumber: json['number'],
+        ayahsText: json['text'],
+        surahName: json['surah']['name']);
   }
 }

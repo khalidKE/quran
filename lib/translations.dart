@@ -4,31 +4,27 @@ class SurahTranslationList {
   SurahTranslationList({required this.translationList});
 
   factory SurahTranslationList.fromJson(Map<String, dynamic> map) {
-    var translation = map['result'] as List;
+    Iterable translation = map['result'];
     List<SurahTranslation> list =
         translation.map((e) => SurahTranslation.fromJson(e)).toList();
+    print(list.length);
     return SurahTranslationList(translationList: list);
   }
 }
 
 class SurahTranslation {
-  final String? sura;
-  final String? aya;
-  final String? arabicText;
-  final String? translation;
+  String? sura;
+  String? aya;
+  String? arabic_text;
+  String? translation;
 
-  SurahTranslation({
-    this.sura,
-    this.aya,
-    this.arabicText,
-    this.translation,
-  });
+  SurahTranslation({this.sura, this.aya, this.arabic_text, this.translation});
 
   factory SurahTranslation.fromJson(Map<String, dynamic> json) {
     return SurahTranslation(
       sura: json['sura'],
       aya: json['aya'],
-      arabicText: json['arabic_text'],
+      arabic_text: json['arabic_text'],
       translation: json['translation'],
     );
   }

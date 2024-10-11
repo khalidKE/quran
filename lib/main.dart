@@ -18,14 +18,14 @@ class MyApp extends StatelessWidget {
       title: 'Quran App',
       theme: ThemeData(
         primarySwatch: Constants.kSwatchColor,
-        primaryColor: Constants.kprimary,
+        primaryColor: Constants.kPrimary,
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Poppins',
       ),
       home: const SplashScreen(),
       routes: {
         JuzScreen.id: (context) => JuzScreen(),
-        SurahDetails.id: (context) => SurahDetails(),
+        Surahdetail.id: (context) => Surahdetail(),
       },
     );
   }
