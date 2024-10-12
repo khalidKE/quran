@@ -5,8 +5,7 @@ import 'package:quran/customTranslation.dart';
 import 'package:quran/translations.dart';
 import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
 
-
-enum Translation { urdu, hindi, english, spanish }
+enum Translation { english, spanish, turkish, german, chinese, french }
 
 class Surahdetail extends StatefulWidget {
   const Surahdetail({Key? key}) : super(key: key);
@@ -20,7 +19,7 @@ class Surahdetail extends StatefulWidget {
 class _SurahdetailState extends State<Surahdetail> {
   final ApiServices _apiServices = ApiServices();
   //SolidController _controller = SolidController();
-  Translation? _translation = Translation.urdu;
+  Translation? _translation = Translation.english;
 
   @override
   Widget build(BuildContext context) {
@@ -75,30 +74,6 @@ class _SurahdetailState extends State<Surahdetail> {
                   child: Column(
                 children: <Widget>[
                   ListTile(
-                    title: const Text('Urdu'),
-                    leading: Radio<Translation>(
-                      value: Translation.urdu,
-                      groupValue: _translation,
-                      onChanged: (Translation? value) {
-                        setState(() {
-                          _translation = value;
-                        });
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text('Hindi'),
-                    leading: Radio<Translation>(
-                      value: Translation.hindi,
-                      groupValue: _translation,
-                      onChanged: (Translation? value) {
-                        setState(() {
-                          _translation = value;
-                        });
-                      },
-                    ),
-                  ),
-                  ListTile(
                     title: const Text('English'),
                     leading: Radio<Translation>(
                       value: Translation.english,
@@ -114,6 +89,54 @@ class _SurahdetailState extends State<Surahdetail> {
                     title: const Text('Spanish'),
                     leading: Radio<Translation>(
                       value: Translation.spanish,
+                      groupValue: _translation,
+                      onChanged: (Translation? value) {
+                        setState(() {
+                          _translation = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Turkish'),
+                    leading: Radio<Translation>(
+                      value: Translation.turkish,
+                      groupValue: _translation,
+                      onChanged: (Translation? value) {
+                        setState(() {
+                          _translation = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('German'),
+                    leading: Radio<Translation>(
+                      value: Translation.german,
+                      groupValue: _translation,
+                      onChanged: (Translation? value) {
+                        setState(() {
+                          _translation = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Chinese'),
+                    leading: Radio<Translation>(
+                      value: Translation.chinese,
+                      groupValue: _translation,
+                      onChanged: (Translation? value) {
+                        setState(() {
+                          _translation = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('French'),
+                    leading: Radio<Translation>(
+                      value: Translation.french,
                       groupValue: _translation,
                       onChanged: (Translation? value) {
                         setState(() {

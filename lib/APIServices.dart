@@ -9,8 +9,6 @@ import 'package:quran/juz.dart';
 import 'package:quran/qari.dart';
 import 'package:quran/translations.dart';
 
-
-
 class ApiServices {
   final endPointUrl = "http://api.alquran.cloud/v1/surah";
   List<Surah> list = [];
@@ -80,13 +78,17 @@ class ApiServices {
       int index, int translationIndex) async {
     String lan = "";
     if (translationIndex == 0) {
-      lan = "urdu_junagarhi";
-    } else if (translationIndex == 1) {
-      lan = "hindi_omari";
-    } else if (translationIndex == 2) {
       lan = "english_saheeh";
-    } else if (translationIndex == 3) {
+    } else if (translationIndex == 1) {
       lan = "spanish_garcia";
+    } else if (translationIndex == 2) {
+      lan = "turkish_shaban";
+    } else if (translationIndex == 3) {
+      lan = "german_bubenheim";
+    } else if (translationIndex == 4) {
+      lan = "chinese_makin";
+    } else if (translationIndex == 5) {
+      lan = "french_montada";
     }
 
     final url = "https://quranenc.com/api/translation/sura/$lan/$index";

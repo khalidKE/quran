@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quran/qari.dart';
 
-class QariCustomTile extends StatefulWidget {
+class QariCustomTile extends StatelessWidget {
   const QariCustomTile({Key? key, required this.qari, required this.ontap})
       : super(key: key);
 
@@ -9,40 +9,54 @@ class QariCustomTile extends StatefulWidget {
   final VoidCallback ontap;
 
   @override
-  _QariCustomTileState createState() => _QariCustomTileState();
-}
-
-class _QariCustomTileState extends State<QariCustomTile> {
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.ontap,
+      onTap: ontap,
       child: Padding(
-        padding: const EdgeInsets.all(4.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
         child: Container(
-          //alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
             color: Colors.white,
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            boxShadow: [
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: const [
               BoxShadow(
-                blurRadius: 3,
+                blurRadius: 4,
                 spreadRadius: 0,
                 color: Colors.black12,
-                offset: Offset(0, 1),
+                offset: Offset(0, 2),
               ),
             ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                widget.qari.name!,
-                textAlign: TextAlign.start,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      qari.name!,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "Tap to listen",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+                color: Colors.grey,
               ),
             ],
           ),

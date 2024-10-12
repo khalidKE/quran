@@ -26,7 +26,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      "Customize your reading view, read in multiple language, listen different audio ",
+                      "Customize your reading view, read in multiple languages, and listen to different audio.",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16),
                     ),
@@ -34,10 +34,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ],
               ),
               image: Center(
-                  child: Image.asset(
-                'assets/quran.png',
-                fit: BoxFit.fitWidth,
-              )),
+                child: Image.asset(
+                  'assets/quran.png',
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
             ),
             PageViewModel(
               title: "Prayer Alerts",
@@ -47,7 +48,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      "Choose your adhan , which prayer to be notified of and how often. ",
+                      "Choose your adhan, select which prayer to be notified of, and set your notification frequency.",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16),
                     ),
@@ -55,9 +56,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ],
               ),
               image: Center(
-                  child: Image.asset(
-                'assets/prayer.png',
-              )),
+                child: Image.asset('assets/prayer.png'),
+              ),
             ),
             PageViewModel(
               title: "Build Better Habits",
@@ -67,36 +67,43 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      "Make Islamic practices a part of your daily life in a way that best suits your life  ",
+                      "Make Islamic practices a part of your daily life in a way that best suits you.",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
                 ],
               ),
-              image: Center(child: Image.asset('assets/zakat.png')),
+              image: Center(
+                child: Image.asset('assets/zakat.png'),
+              ),
             ),
           ],
           onDone: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const MainScreen()));
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MainScreen()),
+            );
           },
           showNextButton: true,
           next: const Icon(
             Icons.arrow_forward,
             color: Colors.black,
           ),
-          done: const Text("Done",
-              style:
-                  TextStyle(fontWeight: FontWeight.w600, color: Colors.black)),
+          done: const Text(
+            "Done",
+            style: TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
+          ),
           dotsDecorator: DotsDecorator(
-              size: const Size.square(10.0),
-              activeSize: const Size(20.0, 10.0),
-              activeColor: Constants.kPrimary,
-              color: Colors.grey,
-              spacing: const EdgeInsets.symmetric(horizontal: 3.0),
-              activeShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0))),
+            size: const Size.square(10.0),
+            activeSize: const Size(20.0, 10.0),
+            activeColor: Constants.kPrimary,
+            color: Colors.grey,
+            spacing: const EdgeInsets.symmetric(horizontal: 3.0),
+            activeShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+          ),
         ),
       ),
     );

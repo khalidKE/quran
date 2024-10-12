@@ -12,86 +12,116 @@ class QariListScreen extends StatefulWidget {
 }
 
 class _QariListScreenState extends State<QariListScreen> {
-  ApiServices apiServices = ApiServices();
+  final ApiServices apiServices = ApiServices();
+  List<Qari> allQaris = [];
+  List<Qari> filteredQaris = [];
+  String searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchQariList();
+  }
+
+  Future<void> _fetchQariList() async {
+    try {
+      final qariList = await apiServices.getQariList();
+      if (mounted) {
+
+        setState(() {
+          allQaris = qariList;
+          filteredQaris = qariList;
+        });
+      }
+    } catch (e) {
+
+    }
+  }
+
+  void _filterQaris(String query) {
+    final lowerCaseQuery = query.toLowerCase();
+    setState(() {
+      filteredQaris = allQaris.where((qari) {
+        return qari.name!.toLowerCase().contains(lowerCaseQuery);
+      }).toList();
+      searchQuery = query;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Qari\'s '),
+          title: const Text('Qari\'s'),
           centerTitle: true,
         ),
         body: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 12, right: 12),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 12,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(32),
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black54,
-                        blurRadius: 1,
-                        spreadRadius: 0.0,
-                        offset: Offset(0, 1),
-                      ),
-                    ]),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Text('Search'),
-                      Spacer(),
-                      Icon(Icons.search),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: FutureBuilder(
-                  future: apiServices.getQariList(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<Qari>> snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(
-                        child: Text('Qari\'s data not found '),
-                      );
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        return QariCustomTile(
-                            qari: snapshot.data![index],
-                            ontap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AudioSurahScreen(
-                                          qari: snapshot.data![index])));
-                            });
-                      },
-                    );
-                  },
-                ),
-              ),
+              const SizedBox(height: 20),
+              _buildSearchBar(),
+              const SizedBox(height: 20),
+              Expanded(child: _buildQariList()),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildSearchBar() {
+    return TextField(
+      onChanged: _filterQaris,
+      decoration: InputDecoration(
+        hintText: 'Search Qari...',
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(32),
+          borderSide: BorderSide.none,
+        ),
+        prefixIcon: const Icon(Icons.search),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+      ),
+    );
+  }
+
+  Widget _buildQariList() {
+    if (filteredQaris.isEmpty && searchQuery.isNotEmpty) {
+      return const Center(
+        child: Text(
+          'No Qari found.',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      );
+    }
+
+    return ListView.builder(
+      itemCount: filteredQaris.length,
+      itemBuilder: (context, index) {
+        return QariCustomTile(
+          qari: filteredQaris[index],
+          ontap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    AudioSurahScreen(qari: filteredQaris[index]),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    
   }
 }

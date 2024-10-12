@@ -26,11 +26,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     getData();
-    Timer(Duration(seconds: 3), ()=>Navigator.pushReplacement(context,
-    MaterialPageRoute(builder: (context){
-      return  alreadyUsed ? MainScreen() : OnBoardingScreen();
-    })
-    ));
+    Timer(
+        Duration(seconds: 3),
+        () => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return alreadyUsed ? MainScreen() : OnBoardingScreen();
+            })));
     // Timer(const Duration(seconds: 3), () {
     //   Get.offNamed("/login");
     // });
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             const Center(
               child: Text(
-                'Muslim Soul',
+                'Aya\'s Light',
                 style: TextStyle(color: Colors.black, fontSize: 30),
               ),
             ),
